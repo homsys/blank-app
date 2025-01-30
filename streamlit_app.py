@@ -3,7 +3,7 @@
 
 import streamlit as st
 import requests
-import pandas as pd
+import time
 
 list_crow = []
 params = {
@@ -25,13 +25,18 @@ def find_values(data, key):  # Функция для поиска значени
 
 
 def main():
-    st.title("Курс CROW")
-    if st.button("Узнать"):
+    st.title("TimeZero")
+    placeholder_crow = st.empty()  # Создаем контейнер для отображения курса
+    placeholder_time = st.empty()  # Создаем контейнер для отсчёта времени
+
+    while True:
         try:
             response = requests.get('https://api.wemixplay.com/info/v2/price-chart', params=params)
             response.raise_for_status()
         except requests.exceptions.RequestException:
             print("Ошибка get запроса получения цены, повторим через 5 минут")
+            time.sleep(300)
+            continue
 
         if response.ok:
             list_crow.clear()
@@ -40,9 +45,17 @@ def main():
             average = sum(list_crow) / len(list_crow)  # Вычисляем среднее значение
             average = round(average, 4)  # Округляем
 
-        st.write(f"Актуальный курс: {average}")
-        df = pd.DataFrame(list_crow, columns=["Average"])
-        st.line_chart(df)
+            a = 60
+            for i in range(60):
+                time.sleep(1)
+                a -= 1
+                if i == 59:
+                    placeholder_crow.write(
+                        f"До обновления курса CROW, {a} секунд:  $<span style='color:red'>{average}</span>",
+                        unsafe_allow_html=True)  # Обновляем контейнер с новым значением
+
+                else:
+                    placeholder_crow.write(f"До обновления курса CROW, {a} секунд:  ${average}")  # Обновляем контейнер с новым значением
 
 
 if __name__ == '__main__':
