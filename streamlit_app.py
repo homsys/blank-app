@@ -25,17 +25,17 @@ def find_values(data, key):  # Функция для поиска значени
 
 
 def main():
-    st.title("TimeZero")
+    st.title("NightCrow")
     placeholder_crow = st.empty()  # Создаем контейнер для отображения курса
-    placeholder_time = st.empty()  # Создаем контейнер для отсчёта времени
 
     while True:
         try:
             response = requests.get('https://api.wemixplay.com/info/v2/price-chart', params=params)
             response.raise_for_status()
         except requests.exceptions.RequestException:
-            print("Ошибка get запроса получения цены, повторим через 5 минут")
-            time.sleep(300)
+            placeholder_crow.write(
+                f"Ошибка обновления курса CROW, всё пропало, бежим кто-куда!!!")
+            time.sleep(60)
             continue
 
         if response.ok:
