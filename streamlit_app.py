@@ -3,6 +3,7 @@
 
 import streamlit as st
 import requests
+import pandas as pd
 
 list_crow = []
 params = {
@@ -40,6 +41,8 @@ def main():
             average = round(average, 4)  # Округляем
 
         st.write(f"Актуальный курс: {average}")
+        df = pd.DataFrame(list_crow, columns=["Average"])
+        st.line_chart(df)
 
 
 if __name__ == '__main__':
