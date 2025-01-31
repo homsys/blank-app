@@ -81,9 +81,9 @@ def main():
         messages = response.json()
         if messages:
             st.write("Последнее сообщение из Discord:")
-            for i in range(0, 30):  
-                st.write(messages[i]["content"])
-            st.write("Ответ от Discord API:", messages)
+            #for i in range(0, 30):  
+                #st.write(messages[i]["content"])
+            #st.write("Ответ от Discord API:", messages)
         
         else:
             st.warning("Нет сообщений в канале.")
