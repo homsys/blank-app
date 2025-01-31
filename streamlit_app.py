@@ -82,7 +82,6 @@ def main():
         if messages:
             st.write("Последнее сообщение из Discord:")
             st.write(messages[0]["content"])
-            st.write("Ответ от Discord API:", messages)
 
         else:
             st.warning("Нет сообщений в канале.")
