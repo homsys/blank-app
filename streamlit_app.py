@@ -69,18 +69,23 @@ def main():
 
     placeholder_crow.write(f"CROW: $<span style='color:red'>{average}</span>", unsafe_allow_html=True)
 
-    response = requests.get(url=f"https://discord.com/api/v10/channels/941976229412761653/messages", headers=headers, params=params2)
+    # Получаем последнее сообщение из Discord
+    try:
+        response = requests.get(
+            url=f"https://discord.com/api/v10/channels/{CHANNEL_ID}/messages",
+            headers=headers,
+            params=params2
+        )
+        response.raise_for_status()  # Проверяем статус ответа
 
-    # Проверка ответа
-    if response.status_code == 200:
         messages = response.json()
         if messages:
             st.write("Последнее сообщение из Discord:")
             st.write(messages[0]["content"])
         else:
-            st.error("Нет сообщений в канале.")
-    else:
-        st.error(f"Ошибка при запросе: {response.status_code}")
+            st.warning("Нет сообщений в канале.")
+    except requests.exceptions.RequestException as e:
+        st.error(f"Ошибка при запросе к Discord API: {e}")
 
 
 if __name__ == '__main__':
