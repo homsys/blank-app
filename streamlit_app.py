@@ -13,7 +13,7 @@ params = {
 TOKEN = st.secrets["discord"]["token"]
 
 # ID канала
-CHANNEL_ID = '941976229412761654'
+CHANNEL_ID = '941976229412761653'
 # URL для получения последнего сообщения
 url = f"https://discord.com/api/v10/channels/941976229412761653/messages"
 headers = {
