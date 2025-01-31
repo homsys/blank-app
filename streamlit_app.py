@@ -1,61 +1,59 @@
-# pip install streamlit
-# pip install requests
-
 import streamlit as st
 import requests
-import time
+from streamlit_autorefresh import st_autorefresh
 
-list_crow = []
+# Автоматический перезапуск приложения каждую минуту
+st_autorefresh(interval=60 * 1000, key="crow_refresh")
+
 params = {
     'symbol': 'CROW',
     'range': '1d',
 }
 
 
-def find_values(data, key):  # Функция для поиска значения
+@st.cache_data(ttl=60)  # Кэшируем данные на 60 секунд!
+def get_crow_data():
+    try:
+        response = requests.get('https://api.wemixplay.com/info/v2/price-chart', params=params)
+        response.raise_for_status()
+        return response.json()
+    except requests.exceptions.RequestException:
+        return None
+
+
+def find_values(data, key, result_list):
     if isinstance(data, dict):
         for k, v in data.items():
             if k == key:
-                list_crow.append(v)
+                result_list.append(v)
             elif isinstance(v, (dict, list)):
-                find_values(v, key)
+                find_values(v, key, result_list)
     elif isinstance(data, list):
         for item in data:
-            find_values(item, key)
+            find_values(item, key, result_list)
 
 
 def main():
     st.title("NightCrow")
-    placeholder_crow = st.empty()  # Создаем контейнер для отображения курса
+    placeholder_crow = st.empty()
 
-    while True:
-        try:
-            response = requests.get('https://api.wemixplay.com/info/v2/price-chart', params=params)
-            response.raise_for_status()
-        except requests.exceptions.RequestException:
-            placeholder_crow.write(
-                f"Ошибка обновления курса CROW, всё пропало, бежим кто-куда!!!")
-            time.sleep(60)
-            continue
+    data = get_crow_data()
 
-        if response.ok:
-            list_crow.clear()
-            find_values(response.json(), 'p')
+    if data is None:
+        placeholder_crow.write("Ошибка обновления курса CROW")
+        return
 
-            average = sum(list_crow) / len(list_crow)  # Вычисляем среднее значение
-            average = round(average, 4)  # Округляем
+    list_crow = []
+    find_values(data, 'p', list_crow)
 
-            a = 60
-            for i in range(60):
-                time.sleep(1)
-                a -= 1
-                if i == 59:
-                    placeholder_crow.write(
-                        f"До обновления курса CROW, {a} секунд:  $<span style='color:red'>{average}</span>",
-                        unsafe_allow_html=True)  # Обновляем контейнер с новым значением
+    if not list_crow:
+        placeholder_crow.write("Данные не найдены")
+        return
 
-                else:
-                    placeholder_crow.write(f"До обновления курса CROW, {a} секунд:  ${average}")  # Обновляем контейнер с новым значением
+    average = sum(list_crow) / len(list_crow)
+    average = round(average, 4)
+
+    placeholder_crow.write(f"CROW: $<span style='color:red'>{average}</span>", unsafe_allow_html=True)
 
 
 if __name__ == '__main__':
