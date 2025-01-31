@@ -10,6 +10,20 @@ params = {
     'range': '1d',
 }
 
+TOKEN = st.secrets["discord"]["token"]
+
+# ID канала
+CHANNEL_ID = '941976229412761653'
+# URL для получения последнего сообщения
+url = f"https://discord.com/api/v10/channels/941976229412761653/messages"
+headers = {
+    "Authorization": f"Bot {TOKEN}"
+}
+params2 = {
+    'chat_id': CHANNEL_ID,
+    'limit': 1  # Получить только последнее сообщение
+}
+
 
 @st.cache_data(ttl=60)  # Кэшируем данные на 60 секунд!
 def get_crow_data():
@@ -54,6 +68,19 @@ def main():
     average = round(average, 4)
 
     placeholder_crow.write(f"CROW: $<span style='color:red'>{average}</span>", unsafe_allow_html=True)
+
+    response = requests.get(url=f"https://discord.com/api/v10/channels/941976229412761653/messages", headers=headers, params=params2)
+
+    # Проверка ответа
+    if response.status_code == 200:
+        messages = response.json()
+        if messages:
+            st.write("Последнее сообщение из Discord:")
+            st.write(messages[0]["content"])
+        else:
+            st.error("Нет сообщений в канале.")
+    else:
+        st.error(f"Ошибка при запросе: {response.status_code}")
 
 
 if __name__ == '__main__':
