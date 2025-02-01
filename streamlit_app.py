@@ -160,8 +160,8 @@ def main():
                 </div>
                 """
                 all_messages_html += message_html  # Добавляем сообщение к общему блоку
-                # Отображаем сообщение с использованием HTML
-                st.markdown(all_messages_html, unsafe_allow_html=True)
+            # Отображаем сообщение с использованием HTML
+            st.markdown(all_messages_html, unsafe_allow_html=True)
         except (IndexError, KeyError):
             st.write("В этом канале больше нет сообщений.")
 
