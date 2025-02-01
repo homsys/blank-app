@@ -156,12 +156,14 @@ def main():
 
                 # Формируем HTML для сообщения
                 message_html = f"""
-                    <span class="discord-username">{username}</span>: {content} \n
+                <div class="discord-messages">
+                    <span class="discord-username">{username}</span>: {content}
+                </div>
                 """
                 all_messages_html += message_html
 
                 # Отображаем сообщение с использованием HTML
-                st.markdown(message_html, unsafe_allow_html=True)
+                #st.markdown(message_html, unsafe_allow_html=True)
 
         except (IndexError, KeyError):
             st.write("В этом канале больше нет сообщений.")
