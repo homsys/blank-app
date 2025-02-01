@@ -147,7 +147,7 @@ def main():
         try:
             # Создаем пустую строку для хранения HTML-кода всех сообщений
             all_messages_html = ""
-            
+
             for i in range(0, 30):  # Ограничение на 30 сообщений
                 username = messages[i]["author"]["username"]
                 content = messages[i]["content"]
@@ -165,6 +165,8 @@ def main():
 
                 # Отображаем сообщение с использованием HTML
                 st.markdown(message_html, unsafe_allow_html=True)
+            st.markdown(all_messages_html, unsafe_allow_html=True)
+
         except (IndexError, KeyError):
             st.write("В этом канале больше нет сообщений.")
 
