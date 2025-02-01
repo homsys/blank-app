@@ -80,7 +80,24 @@ def main():
 
     placeholder_crow.write(f"CROW: $<span style='color:red'>{average}</span>", unsafe_allow_html=True)
 
-    # Получаем последнее сообщение из Discord
+    # CSS для стилизации сообщений
+    discord_style = """
+    <style>
+    .discord-message {
+        background-color: #36393f;
+        color: #ffffff;
+        border-radius: 8px;
+        padding: 10px;
+        margin: 5px 0;
+        max-width: 70%;
+        word-wrap: break-word;
+        font-family: Arial, sans-serif;
+    }
+    </style>
+    """
+
+    # Вставляем CSS в Streamlit
+    st.markdown(discord_style, unsafe_allow_html=True)
 
     messages = get_discord_message()
     if messages:
