@@ -91,6 +91,7 @@ def find_values(data, key, result_list):
 
 
 def main():
+    global all_messages_html
     st.title("NightCrow")
     placeholder_crow = st.empty()
 
@@ -144,9 +145,9 @@ def main():
 
     messages = get_discord_message()
     if messages:
+        all_messages_html = ""
         try:
             # Создаем пустую строку для хранения HTML-кода всех сообщений
-            all_messages_html = ""
             for i in range(0, 30):  # Ограничение на 30 сообщений
                 username = messages[i]["author"]["username"]
                 content = messages[i]["content"]
@@ -159,16 +160,16 @@ def main():
                     <span class="discord-username">{username}</span>: {content}
                 </div>
                 """
-                all_messages_html = message_html
+                all_messages_html += message_html
 
                 # Отображаем сообщение с использованием HTML
                 st.markdown(message_html, unsafe_allow_html=True)
             # Обертываем все сообщения в один блок div
-            st.markdown(all_messages_html, unsafe_allow_html=True)
-
 
         except (IndexError, KeyError):
             st.write("В этом канале больше нет сообщений.")
+
+        st.markdown("all_messages_html", unsafe_allow_html=True)
 
     else:
         st.warning("Нет сообщений в канале.")
