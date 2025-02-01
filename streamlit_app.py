@@ -105,6 +105,7 @@ def main():
         st.write("Discord чат:")
         try:
             for i in range(0, 30):  # Ограничение на 30 сообщений
+                #st.write("Ответ от Discord API:", messages)
                 # Формируем HTML для сообщения
                 message_html = f"""
                 <div class="discord-message">
