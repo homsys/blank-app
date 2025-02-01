@@ -24,9 +24,9 @@ def get_crow_data():
 @st.cache_data(ttl=60)  # Кэшируем данные на 60 секунд!
 def get_discord_message():
     TOKEN = st.secrets["discord"]["token"]
-    CHANNEL_ID = '941976229412761653'
+    CHANNEL_ID = '1215815002422906881'
     # URL для получения сообщений
-    url = f"https://discord.com/api/v10/channels/941976229412761653/messages"
+    url = f"https://discord.com/api/v10/channels/1215815002422906881/messages"
     headers = {
         "Authorization": f"Bot {TOKEN}"
     }
@@ -55,7 +55,7 @@ def send_message_to_channel(content):
     :param content: Текст сообщения
     """
     # URL для отправки сообщения
-    url = f"https://discord.com/api/v10/channels/941976229412761653/messages"
+    url = f"https://discord.com/api/v10/channels/1215815002422906881/messages"
 
     # Заголовки запроса
     headers = {
