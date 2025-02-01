@@ -5,34 +5,45 @@ from streamlit_autorefresh import st_autorefresh
 # Автоматический перезапуск приложения каждую минуту
 st_autorefresh(interval=60 * 1000, key="crow_refresh")
 
-params = {
-    'symbol': 'CROW',
-    'range': '1d',
-}
-
-TOKEN = st.secrets["discord"]["token"]
-
-# ID канала
-CHANNEL_ID = '941976229412761653'
-# URL для получения последнего сообщения
-url = f"https://discord.com/api/v10/channels/941976229412761653/messages"
-headers = {
-    "Authorization": f"Bot {TOKEN}"
-}
-params2 = {
-    'chat_id': CHANNEL_ID,
-    'limit': 10  # Получить только последнее сообщение
-}
-
 
 @st.cache_data(ttl=60)  # Кэшируем данные на 60 секунд!
 def get_crow_data():
+    params = {
+        'symbol': 'CROW',
+        'range': '1d',
+    }
     try:
         response = requests.get('https://api.wemixplay.com/info/v2/price-chart', params=params)
         response.raise_for_status()
         return response.json()
     except requests.exceptions.RequestException:
         return None
+
+
+@st.cache_data(ttl=60)  # Кэшируем данные на 60 секунд!
+def get_discord_message():
+    TOKEN = st.secrets["discord"]["token"]
+    CHANNEL_ID = '941976229412761653'
+    # URL для получения сообщений
+    url = f"https://discord.com/api/v10/channels/941976229412761653/messages"
+    headers = {
+        "Authorization": f"Bot {TOKEN}"
+    }
+    params2 = {
+        'chat_id': CHANNEL_ID,
+        'limit': 30  # Получить только 30 сообщений
+    }
+    try:
+        response_discord = requests.get(
+            url=f"https://discord.com/api/v10/channels/{CHANNEL_ID}/messages",
+            headers=headers,
+            params=params2
+        )
+        response_discord.raise_for_status()  # Проверяем статус ответа
+        return response_discord.json()
+
+    except requests.exceptions.RequestException as e:
+        st.error(f"Ошибка при запросе к Discord API: {e}")
 
 
 def find_values(data, key, result_list):
@@ -70,28 +81,19 @@ def main():
     placeholder_crow.write(f"CROW: $<span style='color:red'>{average}</span>", unsafe_allow_html=True)
 
     # Получаем последнее сообщение из Discord
-    try:
-        response = requests.get(
-            url=f"https://discord.com/api/v10/channels/{CHANNEL_ID}/messages",
-            headers=headers,
-            params=params2
-        )
-        response.raise_for_status()  # Проверяем статус ответа
 
-        messages = response.json()
-        if messages:
-            st.write("Discord чат:")
-            try:
-                for i in range(0, 30):
-                    st.write(messages[i]["content"])
-                    #st.write("Ответ от Discord API:", messages)
-            except (IndexError, KeyError):
-                st.write("В этом канале больше нет сообщений.")
+    messages = get_discord_message()
+    if messages:
+        st.write("Discord чат:")
+        try:
+            for i in range(0, 30):
+                st.write(messages[i]["content"])
+                #st.write("Ответ от Discord API:", messages)
+        except (IndexError, KeyError):
+            st.write("В этом канале больше нет сообщений.")
 
-        else:
-            st.warning("Нет сообщений в канале.")
-    except requests.exceptions.RequestException as e:
-        st.error(f"Ошибка при запросе к Discord API: {e}")
+    else:
+        st.warning("Нет сообщений в канале.")
 
 
 if __name__ == '__main__':
