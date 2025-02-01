@@ -169,7 +169,11 @@ def main():
             st.write("В этом канале больше нет сообщений.")
 
         # Обертываем все сообщения в один блок div
-        final_html = f"""<div class="discord-messages"><span class="discord-username">{all_messages_html}</span>:</div>"""
+        final_html = f"""
+                <div class="discord-message">
+                    <span class="discord-username">{all_messages_html}</span>:
+                </div>
+                """
         st.markdown(final_html, unsafe_allow_html=True)
 
     else:
