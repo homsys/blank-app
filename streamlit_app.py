@@ -169,7 +169,7 @@ def main():
         except (IndexError, KeyError):
             st.write("В этом канале больше нет сообщений.")
 
-        st.markdown("all_messages_html", unsafe_allow_html=True)
+        st.markdown(all_messages_html, unsafe_allow_html=True)
 
     else:
         st.warning("Нет сообщений в канале.")
