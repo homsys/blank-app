@@ -112,6 +112,16 @@ def main():
 
     placeholder_crow.write(f"CROW: $<span style='color:red'>{average}</span>", unsafe_allow_html=True)
 
+    # Поле для ввода сообщения
+    message_content = st.text_input("Введите ваше сообщение:")
+
+    # Кнопка отправки
+    if st.button("Отправить"):
+        if message_content:
+            send_message_to_channel(message_content)
+        else:
+            st.warning("Введите текст сообщения.")  # Предупреждение, если поле пустое
+
     # CSS для стилизации сообщений
     discord_style = """
     <style>
