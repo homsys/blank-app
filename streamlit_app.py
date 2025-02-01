@@ -103,12 +103,14 @@ def main():
     # Логика отправки сообщений
     if messages:
         st.write("Discord чат:")
-        #st.write("Ответ от Discord API:", messages)
+        # st.write("Ответ от Discord API:", messages)
         try:
             for i in range(0, 30):  # Ограничение на 30 сообщений
                 username = messages[i]["author"]["username"]
                 content = messages[i]["content"]
-                
+                if content == "":
+                    continue
+
                 # Формируем HTML для сообщения
                 message_html = f"""
                 <div class="discord-message">
