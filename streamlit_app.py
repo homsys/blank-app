@@ -84,7 +84,7 @@ def main():
             try:
                 for i in range(0, 30):
                     st.write(messages[i]["content"])
-                    st.write("Ответ от Discord API:", messages)
+                    #st.write("Ответ от Discord API:", messages)
             except (IndexError, KeyError):
                 st.write("В этом канале больше нет сообщений.")
 
