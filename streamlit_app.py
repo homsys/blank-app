@@ -100,12 +100,19 @@ def main():
     st.markdown(discord_style, unsafe_allow_html=True)
 
     messages = get_discord_message()
+    # Логика отправки сообщений
     if messages:
         st.write("Discord чат:")
         try:
-            for i in range(0, 30):
-                st.write(messages[i]["content"])
-                #st.write("Ответ от Discord API:", messages)
+            for i in range(0, 30):  # Ограничение на 30 сообщений
+                # Формируем HTML для сообщения
+                message_html = f"""
+                <div class="discord-message">
+                    <strong>{messages[i]["author"]}:</strong> {messages[i]["content"]}
+                </div>
+                """
+                # Отображаем сообщение с использованием HTML
+                st.markdown(message_html, unsafe_allow_html=True)
         except (IndexError, KeyError):
             st.write("В этом канале больше нет сообщений.")
 
