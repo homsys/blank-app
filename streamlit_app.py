@@ -145,7 +145,6 @@ def main():
 
     messages = get_discord_message()
     if messages:
-        all_messages_html = ""
         try:
             # Создаем пустую строку для хранения HTML-кода всех сообщений
             for i in range(0, 30):  # Ограничение на 30 сообщений
@@ -160,21 +159,11 @@ def main():
                     <span class="discord-username">{username}</span>: {content}
                 </div>
                 """
-                all_messages_html += message_html
-
                 # Отображаем сообщение с использованием HTML
-                #st.markdown(message_html, unsafe_allow_html=True)
+                st.markdown(message_html, unsafe_allow_html=True)
 
         except (IndexError, KeyError):
             st.write("В этом канале больше нет сообщений.")
-
-        # Обертываем все сообщения в один блок div
-        final_html = f"""
-        <div class="discord-messages">
-            {all_messages_html}
-        </div>
-        """
-        st.markdown(final_html, unsafe_allow_html=True)
 
     else:
         st.warning("Нет сообщений в канале.")
