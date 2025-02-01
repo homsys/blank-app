@@ -108,7 +108,6 @@ def main():
             for i in range(0, 30):  # Ограничение на 30 сообщений
                 username = messages[i]["author"]["username"]
                 content = messages[i]["content"]
-                st.write("Ответ от Discord API:", username, content)
                 
                 # Формируем HTML для сообщения
                 message_html = f"""
