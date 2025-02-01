@@ -156,7 +156,7 @@ def main():
 
                 # Формируем HTML для сообщения
                 message_html = f"""
-                    <span class="discord-username">{username}</span>: {content}
+                    <span class="discord-username">{username}</span>: {content} \n
                 """
                 all_messages_html += message_html
 
