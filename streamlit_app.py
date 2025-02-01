@@ -159,7 +159,7 @@ def main():
                     <span class="discord-username">{username}</span>: {content}
                 </div>
                 """
-                all_messages_html += message_html
+                all_messages_html = message_html
 
                 # Отображаем сообщение с использованием HTML
                 st.markdown(message_html, unsafe_allow_html=True)
