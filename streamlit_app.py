@@ -165,7 +165,7 @@ def main():
 
                 # Отображаем сообщение с использованием HTML
                 st.markdown(message_html, unsafe_allow_html=True)
-            st.markdown(all_messages_html, unsafe_allow_html=True)
+                st.markdown(all_messages_html, unsafe_allow_html=True)
 
         except (IndexError, KeyError):
             st.write("В этом канале больше нет сообщений.")
