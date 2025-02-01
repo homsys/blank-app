@@ -163,13 +163,15 @@ def main():
                 messag_html = f"""
                     <span class="discord-username">{username}</span>: {content}
                 """
-                
+
                 all_messages_html += messag_html  # Добавляем сообщение к общему блоку
                 st.write(all_messages_html)
 
                 # Отображаем сообщение с использованием HTML
                 st.markdown(message_html, unsafe_allow_html=True)
-            st.markdown(all_messages_html, unsafe_allow_html=True)
+            # Обернуть всё в один div
+            formatted_text = f"<div class=\"discord-message\">\n{all_messages_html}\n</div>"
+            st.markdown(formatted_text, unsafe_allow_html=True)
 
         except (IndexError, KeyError):
             st.write("В этом канале больше нет сообщений.")
