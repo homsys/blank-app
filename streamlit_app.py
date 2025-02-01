@@ -109,8 +109,9 @@ def main():
 
     average = sum(list_crow) / len(list_crow)
     average = round(average, 4)
-
     placeholder_crow.write(f"CROW: $<span style='color:red'>{average}</span>", unsafe_allow_html=True)
+
+    st.write("Discord чат:")
 
     # Поле для ввода сообщения
     message_content = st.text_input("Введите ваше сообщение:")
@@ -143,8 +144,9 @@ def main():
 
     messages = get_discord_message()
     if messages:
-        st.write("Discord чат:")
         try:
+            # Создаем пустую строку для хранения HTML-кода всех сообщений
+            all_messages_html = ""
             for i in range(0, 30):  # Ограничение на 30 сообщений
                 username = messages[i]["author"]["username"]
                 content = messages[i]["content"]
@@ -157,8 +159,9 @@ def main():
                     <span class="discord-username">{username}</span>: {content}
                 </div>
                 """
+                all_messages_html += message_html  # Добавляем сообщение к общему блоку
                 # Отображаем сообщение с использованием HTML
-                st.markdown(message_html, unsafe_allow_html=True)
+                st.markdown(all_messages_html, unsafe_allow_html=True)
         except (IndexError, KeyError):
             st.write("В этом канале больше нет сообщений.")
 
