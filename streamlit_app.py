@@ -13,7 +13,7 @@ params = {
 TOKEN = st.secrets["discord"]["token"]
 
 # ID канала
-CHANNEL_ID = '941976229412761654'
+CHANNEL_ID = '941976229412761653'
 # URL для получения последнего сообщения
 url = f"https://discord.com/api/v10/channels/941976229412761653/messages"
 headers = {
@@ -80,11 +80,14 @@ def main():
 
         messages = response.json()
         if messages:
-            st.write("Последнее сообщение из Discord:")
-            #for i in range(0, 30):  
-                #st.write(messages[i]["content"])
-            #st.write("Ответ от Discord API:", messages)
-        
+            st.write("Discord чат:")
+            try:
+                for i in range(0, 30):
+                    st.write(messages[i]["content"])
+                    st.write("Ответ от Discord API:", messages)
+            except (IndexError, KeyError):
+                st.write("В этом канале больше нет сообщений.")
+
         else:
             st.warning("Нет сообщений в канале.")
     except requests.exceptions.RequestException as e:
