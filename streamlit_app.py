@@ -162,12 +162,17 @@ def main():
 
                 # Отображаем сообщение с использованием HTML
                 st.markdown(message_html, unsafe_allow_html=True)
-            # Обертываем все сообщения в один блок div
 
         except (IndexError, KeyError):
             st.write("В этом канале больше нет сообщений.")
 
-        st.markdown(all_messages_html, unsafe_allow_html=True)
+        # Обертываем все сообщения в один блок div
+        final_html = f"""
+        <div class="discord-messages">
+            {all_messages_html}
+        </div>
+        """
+        st.markdown(final_html, unsafe_allow_html=True)
 
     else:
         st.warning("Нет сообщений в канале.")
