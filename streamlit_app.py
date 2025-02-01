@@ -50,10 +50,8 @@ def get_discord_message():
 # Функция для отправки сообщения
 def send_message_to_channel(content):
     TOKEN = st.secrets["discord"]["token"]
-    """
-    Отправляет сообщение в Discord канал через API.
-    :param content: Текст сообщения
-    """
+
+
     # URL для отправки сообщения
     url = f"https://discord.com/api/v10/channels/1215815002422906881/messages"
 
