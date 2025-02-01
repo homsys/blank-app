@@ -106,10 +106,12 @@ def main():
         st.write("Ответ от Discord API:", messages)
         try:
             for i in range(0, 30):  # Ограничение на 30 сообщений
+                username = message["author"]["username"]
+                content = message["content"]
                 # Формируем HTML для сообщения
                 message_html = f"""
                 <div class="discord-message">
-                    <span class="discord-username">{message["author"]["username"]}</span>: {message["content"]}
+                    <span class="discord-username">{username}</span>: {content}
                 </div>
                 """
                 # Отображаем сообщение с использованием HTML
