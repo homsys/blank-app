@@ -109,7 +109,7 @@ def main():
                 # Формируем HTML для сообщения
                 message_html = f"""
                 <div class="discord-message">
-                    <strong>{messages[i]["author"]}:</strong> {messages[i]["content"]}
+                    <span class="discord-username">{message["author"]["username"]}</span>: {message["content"]}
                 </div>
                 """
                 # Отображаем сообщение с использованием HTML
