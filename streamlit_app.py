@@ -1,5 +1,6 @@
 import streamlit as st
 import requests
+import json
 from streamlit_autorefresh import st_autorefresh
 
 # Автоматический перезапуск приложения каждую минуту
@@ -44,6 +45,37 @@ def get_discord_message():
 
     except requests.exceptions.RequestException as e:
         st.error(f"Ошибка при запросе к Discord API: {e}")
+
+
+# Функция для отправки сообщения
+def send_message_to_channel(content):
+    TOKEN = st.secrets["discord"]["token"]
+    """
+    Отправляет сообщение в Discord канал через API.
+    :param content: Текст сообщения
+    """
+    # URL для отправки сообщения
+    url = f"https://discord.com/api/v10/channels/941976229412761653/messages"
+
+    # Заголовки запроса
+    headers = {
+        "Authorization": f"Bot {TOKEN}",
+        "Content-Type": "application/json"
+    }
+
+    # Данные для отправки
+    data = {
+        "content": content
+    }
+
+    # Отправка POST-запроса
+    response = requests.post(url, headers=headers, data=json.dumps(data))
+
+    # Проверка результата
+    if response.status_code == 200:
+        st.success("Сообщение успешно отправлено!")  # Уведомление в Streamlit
+    else:
+        st.error(f"Ошибка при отправке сообщения: {response.status_code}, {response.text}")  # Уведомление об ошибке
 
 
 def find_values(data, key, result_list):
@@ -100,10 +132,8 @@ def main():
     st.markdown(discord_style, unsafe_allow_html=True)
 
     messages = get_discord_message()
-    # Логика отправки сообщений
     if messages:
         st.write("Discord чат:")
-        # st.write("Ответ от Discord API:", messages)
         try:
             for i in range(0, 30):  # Ограничение на 30 сообщений
                 username = messages[i]["author"]["username"]
