@@ -158,8 +158,8 @@ def main():
                     <span class="discord-username">{username}</span>: {content}
                 </div>
                 """
-            # Отображаем сообщение с использованием HTML
-            st.markdown(message_html, unsafe_allow_html=True)
+                # Отображаем сообщение с использованием HTML
+                st.markdown(message_html, unsafe_allow_html=True)
         except (IndexError, KeyError):
             st.write("В этом канале больше нет сообщений.")
 
