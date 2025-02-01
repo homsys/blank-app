@@ -55,7 +55,7 @@ def send_message_to_channel(content):
     :param content: Текст сообщения
     """
     # URL для отправки сообщения
-    url = f"https://discord.com/api/v10/channels/941976229412761653/messages"
+    url = f"https://discord.com/api/v10/channels/1215815002422906881/messages"
 
     # Заголовки запроса
     headers = {
