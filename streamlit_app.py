@@ -25,8 +25,6 @@ def get_crow_data():
 def get_discord_message():
     TOKEN = st.secrets["discord"]["token"]
     CHANNEL_ID = '1215815002422906881'
-    # URL для получения сообщений
-    url = f"https://discord.com/api/v10/channels/941976229412761653/messages"
     headers = {
         "Authorization": f"Bot {TOKEN}"
     }
@@ -143,9 +141,9 @@ def main():
 
     messages = get_discord_message()
     if messages:
+        # Создаем пустую строку для хранения HTML-кода всех сообщений
         all_messages_html = ""
         try:
-            # Создаем пустую строку для хранения HTML-кода всех сообщений
             for i in range(0, 30):  # Ограничение на 30 сообщений
                 username = messages[i]["author"]["username"]
                 content = messages[i]["content"]
