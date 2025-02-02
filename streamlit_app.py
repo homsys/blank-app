@@ -84,7 +84,6 @@ def find_values(data, key, result_list):
 
 
 def main():
-    global all_messages_html
     placeholder_crow = st.empty()
     placeholder_crow.write("Загрузка данных...")
 
@@ -152,11 +151,6 @@ def main():
                     continue
 
                 # Формируем HTML для сообщения
-                message_html = f"""
-                <div class="discord-message">
-                    <span class="discord-username">{username}</span>: {content}
-                </div>
-                """
                 s1 = """<span class="username">"""
                 s2 = "</span>"
                 all_messages_html += F" {s1} {username} {s2} : {content} <br>"
