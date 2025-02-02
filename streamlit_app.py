@@ -23,19 +23,6 @@ discord_style = """
 </style>
 """
 
-# CSS для уменьшения ширины selectbox
-st.markdown(
-    """
-    <style>
-    /* Стиль для selectbox */
-    .stSelectbox > div > div {
-        width: 100px !important;  /* Укажите нужную ширину */
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
-
 
 @st.cache_data(ttl=60)  # Кэшируем данные на 60 секунд!
 def get_crow_data():  # Функция получения данных о курсе crow
