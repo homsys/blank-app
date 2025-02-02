@@ -25,7 +25,7 @@ discord_style = """
 
 
 @st.cache_data(ttl=60)  # Кэшируем данные на 60 секунд!
-def get_crow_data():
+def get_crow_data():  # Функция получения данных о курсе crow
     params = {
         'symbol': 'CROW',
         'range': '1d',
@@ -39,7 +39,7 @@ def get_crow_data():
 
 
 @st.cache_data(ttl=60)  # Кэшируем данные на 60 секунд!
-def get_discord_message():
+def get_discord_message():  # Функция получения сообщений от дискорда
     TOKEN = st.secrets["discord"]["token"]
     CHANNEL_ID = '1215815002422906881'
     headers = {
@@ -62,10 +62,8 @@ def get_discord_message():
         st.error(f"Ошибка при запросе к Discord API: {e}")
 
 
-# Функция для отправки сообщения
-def send_message_to_channel(content):
+def send_message_to_channel(content):  # Функция для отправки сообщения
     TOKEN = st.secrets["discord"]["token"]
-
 
     # URL для отправки сообщения
     url = f"https://discord.com/api/v10/channels/1215815002422906881/messages"
@@ -91,7 +89,37 @@ def send_message_to_channel(content):
         st.error(f"Ошибка при отправке сообщения: {response.status_code}, {response.text}")  # Уведомление об ошибке
 
 
-def find_values(data, key, result_list):
+def message_chat(messages):  # Поиск сообщений и подготовка чата
+    if messages:
+        # Создаем пустую строку для хранения HTML-кода всех сообщений
+        all_messages_html = ""
+        try:
+            for i in range(0, 30):  # Ограничение на 30 сообщений
+                username = messages[i]["author"]["username"]
+                content = messages[i]["content"]
+                if content == "":
+                    continue
+
+                # Формируем HTML для сообщения
+                s1 = """<span class="username">"""
+                s2 = "</span>"
+                all_messages_html += F" {s1} {username} {s2} : {content} <br>"
+
+        except (IndexError, KeyError):
+            pass
+
+        # Обертываем все сообщения в один блок div
+        final_html = f"""
+                <div class="discord-message">
+                    {all_messages_html}
+                </div>
+                """
+        return final_html
+    else:
+        st.warning("Нет сообщений в канале.")
+
+
+def find_values(data, key, result_list):  # Ищем значение
     if isinstance(data, dict):
         for k, v in data.items():
             if k == key:
@@ -142,37 +170,10 @@ def main():
     st.markdown(discord_style, unsafe_allow_html=True)
 
     messages = get_discord_message()
-    if messages:
-        # Создаем пустую строку для хранения HTML-кода всех сообщений
-        all_messages_html = ""
-        try:
-            for i in range(0, 30):  # Ограничение на 30 сообщений
-                username = messages[i]["author"]["username"]
-                content = messages[i]["content"]
-                if content == "":
-                    continue
+    final_html = message_chat(messages)
 
-                # Формируем HTML для сообщения
-                s1 = """<span class="username">"""
-                s2 = "</span>"
-                all_messages_html += F" {s1} {username} {s2} : {content} <br>"
-
-        except (IndexError, KeyError):
-            pass
-
-        # Обертываем все сообщения в один блок div
-        final_html = f"""
-                <div class="discord-message">
-                    {all_messages_html}
-                </div>
-                """
-        # Отображаем сообщение с использованием HTML
-        st.markdown(final_html, unsafe_allow_html=True)
-
-    else:
-        st.warning("Нет сообщений в канале.")
-
-
+    # Отображаем сообщение с использованием HTML
+    st.markdown(final_html, unsafe_allow_html=True)
     # Автоматический перезапуск приложения каждую минуту
     st_autorefresh(interval=60 * 1000, key="crow_refresh")
 
