@@ -3,6 +3,26 @@ import requests
 import json
 from streamlit_autorefresh import st_autorefresh
 
+# CSS для стилизации сообщений
+discord_style = """
+<style>
+.discord-message {
+    background-color: #36393f;
+    color: #ffffff;
+    border-radius: 8px;
+    padding: 10px;
+    margin: 5px 0;
+    max-width: 70%;
+    word-wrap: break-word;
+    font-family: Arial, sans-serif;
+}
+.username {
+    color: #7289da;
+    font-weight: bold;
+}
+</style>
+"""
+
 
 @st.cache_data(ttl=60)  # Кэшируем данные на 60 секунд!
 def get_crow_data():
@@ -116,25 +136,7 @@ def main():
         else:
             st.warning("Введите текст сообщения.")  # Предупреждение, если поле пустое
 
-    # CSS для стилизации сообщений
-    discord_style = """
-    <style>
-    .discord-message {
-        background-color: #36393f;
-        color: #ffffff;
-        border-radius: 8px;
-        padding: 10px;
-        margin: 5px 0;
-        max-width: 70%;
-        word-wrap: break-word;
-        font-family: Arial, sans-serif;
-    }
-    .username {
-        color: #7289da;
-        font-weight: bold;
-    }
-    </style>
-    """
+
 
     # Вставляем CSS в Streamlit
     st.markdown(discord_style, unsafe_allow_html=True)
@@ -173,6 +175,7 @@ def main():
 
     # Автоматический перезапуск приложения каждую минуту
     st_autorefresh(interval=60 * 1000, key="crow_refresh")
+
 
 if __name__ == '__main__':
     main()
