@@ -164,7 +164,7 @@ def main():
         # Обертываем все сообщения в один блок div
         final_html = f"""
                 <div class="discord-message">
-                    <span class="discord-username">{all_messages_html}</span>
+                    {all_messages_html}
                 </div>
                 """
         # Отображаем сообщение с использованием HTML
