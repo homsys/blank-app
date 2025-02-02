@@ -132,7 +132,6 @@ def find_values(data, key, result_list):  # Ищем значение
 
 
 def main():
-    # Вставляем CSS в Streamlit
     placeholder_crow = st.empty()
     placeholder_crow.write("Загрузка данных...")
 
@@ -165,17 +164,16 @@ def main():
         else:
             st.warning("Введите текст сообщения.")  # Предупреждение, если поле пустое
 
-
-
-
-
-    messages = get_discord_message()
-    final_html = message_chat(messages)
+    messages = get_discord_message()  # Пролучаем сообщения
+    final_html = message_chat(messages)  # Формируем сообщения в чат
 
     # Отображаем сообщение с использованием HTML
     st.markdown(final_html, unsafe_allow_html=True)
+    
     # Автоматический перезапуск приложения каждую минуту
     st_autorefresh(interval=60 * 1000, key="crow_refresh")
+    
+    # Вставляем CSS в Streamlit
     st.markdown(discord_style, unsafe_allow_html=True)
 
 
