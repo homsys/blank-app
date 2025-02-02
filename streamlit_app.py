@@ -174,7 +174,7 @@ def main():
     st_autorefresh(interval=60 * 1000, key="crow_refresh")
 
     # Вставляем CSS в Streamlit
-    #st.markdown(discord_style, unsafe_allow_html=True)
+    st.markdown(discord_style, unsafe_allow_html=True)
 
 
 if __name__ == '__main__':
