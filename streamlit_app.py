@@ -133,6 +133,10 @@ def main():
         word-wrap: break-word;
         font-family: Arial, sans-serif;
     }
+    .username {
+        color: #7289da;
+        font-weight: bold;
+    }
     </style>
     """
 
@@ -156,7 +160,9 @@ def main():
                     <span class="discord-username">{username}</span>: {content}
                 </div>
                 """
-                all_messages_html += F"{username}: {content} <br>"
+                s1 = """<span class="username">"""
+                s2 = "</span>: "
+                all_messages_html += F" {s1} {username} {s2}: {content} <br>"
 
         except (IndexError, KeyError):
             pass
