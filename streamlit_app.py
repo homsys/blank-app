@@ -133,7 +133,6 @@ def find_values(data, key, result_list):  # Ищем значение
 
 def main():
     # Вставляем CSS в Streamlit
-    st.markdown(discord_style, unsafe_allow_html=True)
     placeholder_crow = st.empty()
     placeholder_crow.write("Загрузка данных...")
 
@@ -177,6 +176,7 @@ def main():
     st.markdown(final_html, unsafe_allow_html=True)
     # Автоматический перезапуск приложения каждую минуту
     st_autorefresh(interval=60 * 1000, key="crow_refresh")
+    st.markdown(discord_style, unsafe_allow_html=True)
 
 
 if __name__ == '__main__':
