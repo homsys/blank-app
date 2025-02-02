@@ -23,6 +23,19 @@ discord_style = """
 </style>
 """
 
+# CSS для уменьшения ширины selectbox
+st.markdown(
+    """
+    <style>
+    /* Стиль для selectbox */
+    .stSelectbox > div > div {
+        width: 150px !important;  /* Укажите нужную ширину */
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
 
 @st.cache_data(ttl=60)  # Кэшируем данные на 60 секунд!
 def get_crow_data():  # Функция получения данных о курсе crow
@@ -157,7 +170,7 @@ def main():
     # Поле для ввода сообщения
     message_content = st.text_input("Введите ваше сообщение:")
 
-    col1, col2 = st.columns([4, 1])
+    col1, col2 = st.columns(2)
 
     with col1:
         if st.button("Отправить"):     # Кнопка отправки
