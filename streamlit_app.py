@@ -157,7 +157,7 @@ def main():
     # Поле для ввода сообщения
     message_content = st.text_input("Введите ваше сообщение:")
 
-    col1, col2 = st.columns([1, 4])
+    col1, col2 = st.beta_columns([1, 4])
 
     with col1:
         if st.button("Отправить"):     # Кнопка отправки
