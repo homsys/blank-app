@@ -86,6 +86,30 @@ def find_values(data, key, result_list):
             find_values(item, key, result_list)
 
 
+
+# Кастомные стили для Streamlit
+st.markdown(
+    """
+    <style>
+    .stApp {
+        padding-top: 0px;
+        margin-top: 0px;
+    }
+    .stApp > header {
+        display: none;
+    }
+    .stApp > header > div:first-child {
+        display: none;
+    }
+    .stApp > header > div:last-child {
+        display: none;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+
 def main():
     global all_messages_html
     st.title("NightCrow")
