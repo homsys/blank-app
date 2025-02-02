@@ -3,8 +3,6 @@ import requests
 import json
 from streamlit_autorefresh import st_autorefresh
 
-# Автоматический перезапуск приложения каждую минуту
-st_autorefresh(interval=60 * 1000, key="crow_refresh")
 
 
 @st.cache_data(ttl=60)  # Кэшируем данные на 60 секунд!
@@ -84,30 +82,6 @@ def find_values(data, key, result_list):
     elif isinstance(data, list):
         for item in data:
             find_values(item, key, result_list)
-
-
-
-# Кастомные стили для Streamlit
-st.markdown(
-    """
-    <style>
-    .stApp {
-        padding-top: 0px;
-        margin-top: 0px;
-    }
-    .stApp > header {
-        display: none;
-    }
-    .stApp > header > div:first-child {
-        display: none;
-    }
-    .stApp > header > div:last-child {
-        display: none;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
 
 
 def main():
@@ -204,6 +178,9 @@ def main():
     else:
         st.warning("Нет сообщений в канале.")
 
+
+    # Автоматический перезапуск приложения каждую минуту
+    st_autorefresh(interval=60 * 1000, key="crow_refresh")
 
 if __name__ == '__main__':
     main()
