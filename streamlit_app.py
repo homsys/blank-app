@@ -86,7 +86,6 @@ def find_values(data, key, result_list):
 
 def main():
     global all_messages_html
-    st.title("NightCrow")
     placeholder_crow = st.empty()
     placeholder_crow.write("Загрузка данных...")
 
