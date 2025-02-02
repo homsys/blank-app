@@ -157,12 +157,20 @@ def main():
     # Поле для ввода сообщения
     message_content = st.text_input("Введите ваше сообщение:")
 
-    # Кнопка отправки
-    if st.button("Отправить"):
-        if message_content:
-            send_message_to_channel(message_content)
-        else:
-            st.warning("Введите текст сообщения.")  # Предупреждение, если поле пустое
+    col1, col2 = st.columns(2)
+
+    with col1:
+        if st.button("Отправить"):     # Кнопка отправки
+            if message_content:
+                send_message_to_channel(message_content)
+            else:
+                st.warning("Введите текст сообщения.")  # Предупреждение, если поле пустое
+
+    with col2:
+        option = st.selectbox(
+            "Выберите дискорд канал",
+            ("NightCrows", "Флудильня", "Сrypto-and-nft"),
+        )
 
     messages = get_discord_message()  # Пролучаем сообщения
     final_html = message_chat(messages)  # Формируем сообщения в чат
