@@ -132,6 +132,8 @@ def find_values(data, key, result_list):  # Ищем значение
 
 
 def main():
+    # Вставляем CSS в Streamlit
+    st.markdown(discord_style, unsafe_allow_html=True)
     placeholder_crow = st.empty()
     placeholder_crow.write("Загрузка данных...")
 
@@ -166,8 +168,7 @@ def main():
 
 
 
-    # Вставляем CSS в Streamlit
-    st.markdown(discord_style, unsafe_allow_html=True)
+
 
     messages = get_discord_message()
     final_html = message_chat(messages)
