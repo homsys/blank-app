@@ -3,24 +3,6 @@ import requests
 import json
 from streamlit_autorefresh import st_autorefresh
 
-st.markdown(
-    """
-    <style>
-    /* Убираем отступы и padding у блока */
-    div[data-testid="stVerticalBlockBorderWrapper"] {
-        padding: 0px !important;
-        margin: 0px !important;
-    }
-
-    /* Убираем отступы у дочерних элементов */
-    div[data-testid="stVerticalBlockBorderWrapper"] > div {
-        padding: 0px !important;
-        margin: 0px !important;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
 
 @st.cache_data(ttl=60)  # Кэшируем данные на 60 секунд!
 def get_crow_data():
