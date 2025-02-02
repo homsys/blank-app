@@ -90,6 +90,7 @@ def main():
     global all_messages_html
     st.title("NightCrow")
     placeholder_crow = st.empty()
+    placeholder_crow.write("Загрузка данных...")
 
     data = get_crow_data()
 
