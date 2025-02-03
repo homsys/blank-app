@@ -181,8 +181,9 @@ def main():
     query_params = st.session_state
     st.write(query_params)
 
-    url = st.script_request_queue.get_request_url()
-    st.write("URL вашего приложения:", url)
+    with st.spinner('Выполняется запрос...'):
+        url = st.script_request_queue.get_request_url()
+        st.write("URL вашего приложения:", url)
 
 
     user_id = query_params.get("tg_user_id", [None])[0]
