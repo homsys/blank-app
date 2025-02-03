@@ -187,6 +187,14 @@ def main():
     query_params = st.query_params
     st.write(query_params)
 
+    user_id = query_params.get("tg_user_id", [None])[0]
+
+    if user_id:
+        st.write(f"Добро пожаловать, пользователь Telegram ID: {user_id}")
+        # Здесь можно связать user_id с вашей логикой Streamlit
+    else:
+        st.write("Ошибка: идентификатор пользователя не передан.")
+
 
 if __name__ == '__main__':
     main()
