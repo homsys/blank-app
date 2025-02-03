@@ -183,6 +183,10 @@ def main():
     # Вставляем CSS в Streamlit
     st.markdown(discord_style, unsafe_allow_html=True)
 
+    # Получаем параметры из URL
+    query_params = get_query_params()
+    st.write(query_params)
+
 
 if __name__ == '__main__':
     main()
