@@ -177,9 +177,10 @@ def main():
     # Вставляем CSS в Streamlit
     st.markdown(discord_style, unsafe_allow_html=True)
 
-    # Получаем параметры из URL
-    query_params = st.query_params.to_dict()
-    st.write(query_params)
+    # Получить параметры из URL (например, tg_user_id)
+    user_id = st.query_params.get("tg_user_id", "unknown")
+
+    st.write(f"Hello, Telegram User ID: {user_id}")
 
 
 
