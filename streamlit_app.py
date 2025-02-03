@@ -177,11 +177,11 @@ def main():
     st.markdown(discord_style, unsafe_allow_html=True)
 
     # Получаем параметры из URL
-    query_params = st.experimental_get_query_params()
+    query_params = st.query_params()
 
     # Выводим параметры
     st.write("Query Parameters:", query_params)
-    
-    
+
+
 if __name__ == '__main__':
     main()
