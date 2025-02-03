@@ -4,7 +4,6 @@ import json
 from streamlit_autorefresh import st_autorefresh
 
 
-
 # CSS для стилизации сообщений
 discord_style = """
 <style>
@@ -176,11 +175,6 @@ def main():
 
     # Вставляем CSS в Streamlit
     st.markdown(discord_style, unsafe_allow_html=True)
-
-    # Получить параметры из URL (например, tg_user_id)
-    user_id = st.query_params.get("tg_user_id", "unknown")
-    st.write(user_id)
-
 
 
 if __name__ == '__main__':
