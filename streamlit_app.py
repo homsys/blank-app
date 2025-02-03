@@ -181,13 +181,11 @@ def main():
     query_params = st.session_state
     st.write(query_params)
 
-    user_id = query_params.get("tg_user_id", [None])[0]
+    url = st.script_request_queue.get_request_url()
+    st.write("URL вашего приложения:", url)
 
-    if user_id:
-        st.write(f"Добро пожаловать, пользователь Telegram ID: {user_id}")
-        # Здесь можно связать user_id с вашей логикой Streamlit
-    else:
-        st.write("Ошибка: идентификатор пользователя не передан.")
+
+    user_id = query_params.get("tg_user_id", [None])[0]
 
 
 if __name__ == '__main__':
