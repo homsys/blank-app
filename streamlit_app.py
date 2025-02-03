@@ -133,12 +133,6 @@ def find_values(data, key, result_list):  # Ищем значение
             find_values(item, key, result_list)
 
 
-# Функция для извлечения параметров из URL
-def get_query_params():
-    query_string = st.experimental_get_query_params()
-    return query_string
-
-
 def main():
     placeholder_crow = st.empty()
     placeholder_crow.write("Загрузка данных...")
