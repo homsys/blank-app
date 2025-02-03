@@ -178,12 +178,8 @@ def main():
     st.markdown(discord_style, unsafe_allow_html=True)
 
     # Получаем параметры из URL
-    query_params = st.session_state
+    query_params = st.query_params.get_all
     st.write(query_params)
-
-    with st.spinner('Выполняется запрос...'):
-        url = st.script_request_queue.get_request_url()
-        st.write("URL вашего приложения:", url)
 
 
     user_id = query_params.get("tg_user_id", [None])[0]
