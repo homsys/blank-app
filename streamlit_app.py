@@ -177,7 +177,7 @@ def main():
     # Вставляем CSS в Streamlit
     st.markdown(discord_style, unsafe_allow_html=True)
 
-    url_params = st.query_params.get_all("user")
+    url_params = st.query_params.get_all("tgWebAppData")
 
     st.write(url_params)
 
