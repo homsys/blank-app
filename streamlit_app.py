@@ -184,7 +184,7 @@ def main():
     st.markdown(discord_style, unsafe_allow_html=True)
 
     # Получаем параметры из URL
-    query_params = st.query_params()
+    query_params = st.query_params
     st.write(query_params)
 
 
