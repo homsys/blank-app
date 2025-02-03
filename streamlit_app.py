@@ -182,8 +182,6 @@ def main():
     st.write(query_params)
 
 
-    user_id = query_params.get("tg_user_id", [None])[0]
-
 
 if __name__ == '__main__':
     main()
