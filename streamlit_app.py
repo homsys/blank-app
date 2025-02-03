@@ -179,8 +179,7 @@ def main():
 
     # Получить параметры из URL (например, tg_user_id)
     user_id = st.query_params.get("tg_user_id", "unknown")
-
-    st.write(f"Hello, Telegram User ID: {user_id}")
+    st.write(user_id)
 
 
 
