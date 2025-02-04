@@ -69,6 +69,29 @@ def get_discord_message():  # Функция получения сообщени
         st.error(f"Ошибка при запросе к Discord API: {e}")
 
 
+def add_username(content):  # Функция распознания пользователя - добавляем ник в сообещние
+    url = st_javascript("await fetch('').then(r => window.parent.location.href)")
+
+    # Извлечение фрагмента после '#'
+    fragment = urlparse(url).fragment
+
+    # Разделение фрагмента на параметры
+    params = parse_qs(fragment)
+
+    # Декодирование параметров
+    decoded_params = {key: unquote(value[0]) for key, value in params.items()}
+
+
+    user_data_str = decoded_params["tgWebAppData"].split('user=')[1].split('&')[0]
+
+    # Преобразуем строку в словарь
+    user_data = json.loads(user_data_str)
+
+    # Извлекаем username
+    username = user_data["username"]
+    st.write(username)
+
+
 def send_message_to_channel(content):  # Функция для отправки сообщения
     TOKEN = st.secrets["discord"]["token"]
 
@@ -104,7 +127,7 @@ def send_message_to_channel(content):  # Функция для отправки 
         st.error(f"Ошибка при отправке сообщения: {response.status_code}, {response.text}")  # Уведомление об ошибке
 
 
-def remove_ansi_escape_sequences(text):  # Очищяю текст от символов окрашивающих текст
+def remove_text(text):  # Очищяю текст от символов окрашивающих текст
     # Регулярное выражение для удаления всех ANSI-последовательностей
     ansi_escape = re.compile(r'\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])')
     text = ansi_escape.sub('', text)
@@ -124,7 +147,7 @@ def message_chat(messages):  # Поиск сообщений и подготов
                 if content == "":
                     continue
 
-                cleaned_content = remove_ansi_escape_sequences(content)
+                cleaned_content = remove_text(content)
 
                 # Формируем HTML для сообщения
                 s1 = """<span class="username">"""
@@ -133,7 +156,6 @@ def message_chat(messages):  # Поиск сообщений и подготов
 
         except (IndexError, KeyError):
             pass
-
 
         # Обертываем все сообщения в один блок div
         final_html = f"""
@@ -211,7 +233,15 @@ def main():
     # Декодирование параметров
     decoded_params = {key: unquote(value[0]) for key, value in params.items()}
 
-    st.write(decoded_params)
+
+    user_data_str = decoded_params["tgWebAppData"].split('user=')[1].split('&')[0]
+
+    # Преобразуем строку в словарь
+    user_data = json.loads(user_data_str)
+
+    # Извлекаем username
+    username = user_data["username"]
+    st.write(username)
 
 
 if __name__ == '__main__':
