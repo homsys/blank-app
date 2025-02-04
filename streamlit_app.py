@@ -87,7 +87,8 @@ def send_message_to_channel(content):  # Функция для отправки 
         "Content-Type": "application/json"
     }
 
-    colored_message = F"""```ansi
+    username = "Сообщение от:"
+    colored_message = F"""{username}```ansi
 [2;31m[2;31m[2;31m[2;31m{content}[0m[2;31m[0m[2;31m[0m[2;31m[0m[2;31m[2;31m[2;31m[2;31m[2;41m[2;31m[2;31m[2;31m[0m[2;31m[2;41m[0m[2;31m[2;41m[0m[2;31m[2;41m[0m[2;31m[0m[2;31m[0m[2;31m[0m[2;31m[0m
 ```"""
 
