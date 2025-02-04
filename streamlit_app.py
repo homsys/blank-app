@@ -2,6 +2,7 @@ import streamlit as st
 import requests
 import json
 from streamlit_autorefresh import st_autorefresh
+import urllib.parse
 
 
 
@@ -175,9 +176,29 @@ def main():
     # Вставляем CSS в Streamlit
     st.markdown(discord_style, unsafe_allow_html=True)
 
-    url_params = st.query_params.get_all("tgWebAppData")
+    # JavaScript для извлечения параметров из хэша
+    js_code = """
+    const params = new URLSearchParams(window.location.hash.slice(1));
+    window.parent.postMessage({ type: 'hashParams', data: Object.fromEntries(params.entries()) }, '*');
+    """
 
-    st.write(url_params)
+    # Вставляем JavaScript в Streamlit
+    st.components.v1.html(f"<script>{js_code}</script>", height=0)
+
+    # Ожидаем данные от JavaScript
+    try:
+        # Получаем данные из сообщения
+        hash_params = st.experimental_get_query_params().get("hashParams", [None])[0]
+
+        if hash_params:
+            # Преобразуем строку в словарь
+            hash_params = eval(hash_params)  # Используйте с осторожностью!
+            st.write("Параметры из хэша:")
+            st.json(hash_params)
+        else:
+            st.write("Параметры из хэша не найдены.")
+    except Exception as e:
+        st.write(f"Ошибка: {e}")
 
 
 if __name__ == '__main__':
