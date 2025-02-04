@@ -115,13 +115,15 @@ def message_chat(messages):  # Поиск сообщений и подготов
                 if content == "":
                     continue
 
-                text_to_remove_pattern = re.compile(
-                    r"```ansi[2;31m[2;31m[2;31m[2;31m")  # Замените "your_pattern_here" на шаблон, который соответствует тексту, который вы хотите удалить
-                new_string1 = re.sub(text_to_remove_pattern, "", content)
-                text_to_remove_pattern = re.compile(
-                    r"[0m[2;31m[0m[2;31m[0m[2;31m[0m[2;31m[2;31m[2;31m[2;31m[2;41m[2;31m[2;31m[2;31m[0m[2;31m[2;41m[0m[2;31m[2;41m[0m[2;31m[2;41m[0m[2;31m[0m[2;31m[0m[2;31m[0m[2;31m[0m```")  # Замените "your_pattern_here" на шаблон, который соответствует тексту, который вы хотите удалить
-                new_string2 = re.sub(text_to_remove_pattern, "", new_string1)
+                # Удаление первой последовательности
+                text_to_remove_pattern1 = re.compile(r'```ansi\x1B\[2;31m\x1B\[2;31m\x1B\[2;31m\x1B\[2;31m')
+                new_string1 = re.sub(text_to_remove_pattern1, "", content)
 
+                # Удаление второй последовательности
+                text_to_remove_pattern2 = re.compile(
+                    r'\x1B\[0m\x1B\[2;31m\x1B\[0m\x1B\[2;31m\x1B\[0m\x1B\[2;31m\x1B\[0m\x1B\[2;31m\x1B\[2;31m\x1B\[2;31m\x1B\[2;31m\x1B\[2;41m\x1B\[2;31m\x1B\[2;31m\x1B\[2;31m\x1B\[0m\x1B\[2;31m\x1B\[2;41m\x1B\[0m\x1B\[2;31m\x1B\[2;41m\x1B\[0m\x1B\[2;31m\x1B\[2;41m\x1B\[0m\x1B\[2;31m\x1B\[0m\x1B\[2;31m\x1B\[0m\x1B\[2;31m\x1B\[0m\x1B\[2;31m\x1B\[0m```'
+                )
+                new_string2 = re.sub(text_to_remove_pattern2, "", new_string1)
 
                 # Формируем HTML для сообщения
                 s1 = """<span class="username">"""
