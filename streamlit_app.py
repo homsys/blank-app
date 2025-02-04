@@ -69,8 +69,26 @@ def get_discord_message():  # Функция получения сообщени
         st.error(f"Ошибка при запросе к Discord API: {e}")
 
 
-def add_username(content):  # Функция распознания пользователя - добавляем ник в сообещние
-    pass
+def add_username():  # Функция распознания пользователя - добавляем ник в сообещние
+    url = st_javascript("await fetch('').then(r => window.parent.location.href)")
+
+    # Извлечение фрагмента после '#'
+    fragment = urlparse(url).fragment
+
+    # Разделение фрагмента на параметры
+    params = parse_qs(fragment)
+
+    # Декодирование параметров
+    decoded_params = {key: unquote(value[0]) for key, value in params.items()}
+
+    user_data_str = decoded_params["tgWebAppData"].split('user=')[1].split('&')[0]
+
+    # Преобразуем строку в словарь
+    user_data = json.loads(user_data_str)
+
+    # Извлекаем username
+    username = user_data["username"]
+    return username
 
 
 def send_message_to_channel(content):  # Функция для отправки сообщения
@@ -87,7 +105,8 @@ def send_message_to_channel(content):  # Функция для отправки 
         "Content-Type": "application/json"
     }
 
-    username = "Сообщение от:"
+    username = add_username()
+    username = F"Сообщение от:{username}"
     colored_message = F"""{username}```ansi
 [2;31m[2;31m[2;31m[2;31m{content}[0m[2;31m[0m[2;31m[0m[2;31m[0m[2;31m[2;31m[2;31m[2;31m[2;41m[2;31m[2;31m[2;31m[0m[2;31m[2;41m[0m[2;31m[2;41m[0m[2;31m[2;41m[0m[2;31m[0m[2;31m[0m[2;31m[0m[2;31m[0m
 ```"""
