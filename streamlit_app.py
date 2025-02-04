@@ -222,27 +222,6 @@ def main():
     # Вставляем CSS в Streamlit
     st.markdown(discord_style, unsafe_allow_html=True)
 
-    url = st_javascript("await fetch('').then(r => window.parent.location.href)")
-
-    # Извлечение фрагмента после '#'
-    fragment = urlparse(url).fragment
-
-    # Разделение фрагмента на параметры
-    params = parse_qs(fragment)
-
-    # Декодирование параметров
-    decoded_params = {key: unquote(value[0]) for key, value in params.items()}
-
-
-    user_data_str = decoded_params["tgWebAppData"].split('user=')[1].split('&')[0]
-
-    # Преобразуем строку в словарь
-    user_data = json.loads(user_data_str)
-
-    # Извлекаем username
-    username = user_data["username"]
-    st.write(username)
-
 
 if __name__ == '__main__':
     main()
