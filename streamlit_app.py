@@ -107,8 +107,11 @@ def send_message_to_channel(content):  # Функция для отправки 
 def remove_ansi_escape_sequences(text):
     # Регулярное выражение для удаления всех ANSI-последовательностей
     ansi_escape = re.compile(r'\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])')
-    return ansi_escape.sub('', text)
+    text = ansi_escape.sub('', text)
+    new_string = text.replace("```ansi", "")
+    return new_string
 
+    
 def message_chat(messages):  # Поиск сообщений и подготовка чата
     if messages:
         # Создаем пустую строку для хранения HTML-кода всех сообщений
