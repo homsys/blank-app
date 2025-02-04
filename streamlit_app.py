@@ -4,6 +4,8 @@ import json
 from streamlit_autorefresh import st_autorefresh
 from streamlit_javascript import st_javascript
 from urllib.parse import urlparse, parse_qs, unquote
+import re
+
 
 
 
@@ -113,16 +115,18 @@ def message_chat(messages):  # Поиск сообщений и подготов
                 if content == "":
                     continue
 
-                text_to_remove = """```ansi[2;31m[2;31m[2;31m[2;31m"""
-                text_to_remove2 = """[0m[2;31m[0m[2;31m[0m[2;31m[0m[2;31m[2;31m[2;31m[2;31m[2;41m[2;31m[2;31m[2;31m[0m[2;31m[2;41m[0m[2;31m[2;41m[0m[2;31m[2;41m[0m[2;31m[0m[2;31m[0m[2;31m[0m[2;31m[0m```"""
-                new_string = content.replace(text_to_remove, "")
-                new_string = new_string.replace(text_to_remove2, "")
+                text_to_remove_pattern = re.compile(
+                    r"```ansi[2;31m[2;31m[2;31m[2;31m")  # Замените "your_pattern_here" на шаблон, который соответствует тексту, который вы хотите удалить
+                new_string1 = re.sub(text_to_remove_pattern, "", content)
+                text_to_remove_pattern = re.compile(
+                    r"[0m[2;31m[0m[2;31m[0m[2;31m[0m[2;31m[2;31m[2;31m[2;31m[2;41m[2;31m[2;31m[2;31m[0m[2;31m[2;41m[0m[2;31m[2;41m[0m[2;31m[2;41m[0m[2;31m[0m[2;31m[0m[2;31m[0m[2;31m[0m```")  # Замените "your_pattern_here" на шаблон, который соответствует тексту, который вы хотите удалить
+                new_string2 = re.sub(text_to_remove_pattern, "", new_string1)
 
 
                 # Формируем HTML для сообщения
                 s1 = """<span class="username">"""
                 s2 = "</span>"
-                all_messages_html += F" {s1} {username} {s2} : {new_string} <br>"
+                all_messages_html += F" {s1} {username} {s2} : {new_string2} <br>"
 
         except (IndexError, KeyError):
             pass
