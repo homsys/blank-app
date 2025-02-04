@@ -116,7 +116,7 @@ def send_message_to_channel(content):  # Функция для отправки 
 
     # Данные для отправки
     data = {
-        "content": colored_message
+        "content": username
     }
 
 
