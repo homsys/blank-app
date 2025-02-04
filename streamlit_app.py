@@ -94,7 +94,7 @@ def add_username():  # Функция распознания пользоват�
 def send_message_to_channel(content):  # Функция для отправки сообщения
     TOKEN = st.secrets["discord"]["token"]
 
-    id_canal = "941976229412761653"
+    id_canal = "1215815002422906881"
 
     # URL для отправки сообщения
     url = f"https://discord.com/api/v10/channels/{id_canal}/messages"
