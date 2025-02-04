@@ -114,7 +114,7 @@ def message_chat(messages):  # Поиск сообщений и подготов
                     continue
 
                 text_to_remove = """```ansi[2;31m[2;31m[2;31m[2;31m"""
-                text_to_remove2 = """[0m[2;31m[0m[2;31m[0m[2;31m[0m[2;31m[2;31m[2;31m[2;31m[2;41m[2;31m[2;31m[2;31m[0m[2;31m[2;41m[0m[2;31m[2;41m[0m[2;31m[2;41m[0m[2;31m[0m[2;31m[0m[2;31m[0m[2;31m[0m``````""""
+                text_to_remove2 = """[0m[2;31m[0m[2;31m[0m[2;31m[0m[2;31m[2;31m[2;31m[2;31m[2;41m[2;31m[2;31m[2;31m[0m[2;31m[2;41m[0m[2;31m[2;41m[0m[2;31m[2;41m[0m[2;31m[0m[2;31m[0m[2;31m[0m[2;31m[0m```"""
                 new_string = content.replace(text_to_remove, "")
                 new_string = new_string.replace(text_to_remove2, "")
 
