@@ -175,16 +175,27 @@ def main():
     # Вставляем CSS в Streamlit
     st.markdown(discord_style, unsafe_allow_html=True)
 
-    # Напишите ваш JavaScript код
+    # HTML и JavaScript код для извлечения URL
     js_code = """
     <script>
-        var url = window.location;
-        alert("Current URL is: " + url);
+    function getUrl() {
+        var url = window.location.href;
+        return url;
+    }
+    var currentUrl = getUrl();
+    window.parent.postMessage({type: 'streamlit:setComponentValue', value: currentUrl}, '*');
     </script>
     """
 
-    # Отобразите JavaScript код с помощью st.write()
-    st.write(js_code, unsafe_allow_html=True)
+    # Встраиваем JavaScript в приложение
+    st.components.v1.html(js_code, height=0)
+
+    # Получаем URL из JavaScript
+    url = st.session_state.get('url', None)
+    if url:
+        st.write("Текущий URL:", url)
+    else:
+        st.write("URL не найден.")
 
 
 if __name__ == '__main__':
