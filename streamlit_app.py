@@ -104,6 +104,11 @@ def send_message_to_channel(content):  # Функция для отправки 
         st.error(f"Ошибка при отправке сообщения: {response.status_code}, {response.text}")  # Уведомление об ошибке
 
 
+def remove_ansi_escape_sequences(text):
+    # Регулярное выражение для удаления всех ANSI-последовательностей
+    ansi_escape = re.compile(r'\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])')
+    return ansi_escape.sub('', text)
+
 def message_chat(messages):  # Поиск сообщений и подготовка чата
     if messages:
         # Создаем пустую строку для хранения HTML-кода всех сообщений
@@ -115,20 +120,12 @@ def message_chat(messages):  # Поиск сообщений и подготов
                 if content == "":
                     continue
 
-                # Удаление первой последовательности
-                text_to_remove_pattern1 = re.compile(r'```ansi\x1B\[2;31m\x1B\[2;31m\x1B\[2;31m\x1B\[2;31m')
-                new_string1 = re.sub(text_to_remove_pattern1, "", content)
-
-                # Удаление второй последовательности
-                text_to_remove_pattern2 = re.compile(
-                    r'\x1B\[0m\x1B\[2;31m\x1B\[0m\x1B\[2;31m\x1B\[0m\x1B\[2;31m\x1B\[0m\x1B\[2;31m\x1B\[2;31m\x1B\[2;31m\x1B\[2;31m\x1B\[2;41m\x1B\[2;31m\x1B\[2;31m\x1B\[2;31m\x1B\[0m\x1B\[2;31m\x1B\[2;41m\x1B\[0m\x1B\[2;31m\x1B\[2;41m\x1B\[0m\x1B\[2;31m\x1B\[2;41m\x1B\[0m\x1B\[2;31m\x1B\[0m\x1B\[2;31m\x1B\[0m\x1B\[2;31m\x1B\[0m\x1B\[2;31m\x1B\[0m```'
-                )
-                new_string2 = re.sub(text_to_remove_pattern2, "", new_string1)
+                cleaned_content = remove_ansi_escape_sequences(content)
 
                 # Формируем HTML для сообщения
                 s1 = """<span class="username">"""
                 s2 = "</span>"
-                all_messages_html += F" {s1} {username} {s2} : {new_string2} <br>"
+                all_messages_html += F" {s1} {username} {s2} : {cleaned_content} <br>"
 
         except (IndexError, KeyError):
             pass
