@@ -180,8 +180,6 @@ def main():
 
     url = st_javascript("await fetch('').then(r => window.parent.location.href)")
 
-    st.write(url)
-
     # Извлечение фрагмента после '#'
     fragment = urlparse(url).fragment
 
@@ -192,7 +190,7 @@ def main():
     decoded_params = {key: unquote(value[0]) for key, value in params.items()}
 
     st.write(decoded_params)
-    
+
 
 if __name__ == '__main__':
     main()
