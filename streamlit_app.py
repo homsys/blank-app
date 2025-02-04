@@ -70,8 +70,10 @@ def get_discord_message():  # Функция получения сообщени
 def send_message_to_channel(content):  # Функция для отправки сообщения
     TOKEN = st.secrets["discord"]["token"]
 
+    id_canal = "941976229412761653"
+    
     # URL для отправки сообщения
-    url = f"https://discord.com/api/v10/channels/1215815002422906881/messages"
+    url = f"https://discord.com/api/v10/channels/{id_canal}/messages"
 
     # Заголовки запроса
     headers = {
@@ -79,10 +81,16 @@ def send_message_to_channel(content):  # Функция для отправки 
         "Content-Type": "application/json"
     }
 
+    colored_message = F"""```ansi
+[2;31m[2;31m[2;31m[2;31m{content}[0m[2;31m[0m[2;31m[0m[2;31m[0m[2;31m[2;31m[2;31m[2;31m[2;41m[2;31m[2;31m[2;31m[0m[2;31m[2;41m[0m[2;31m[2;41m[0m[2;31m[2;41m[0m[2;31m[0m[2;31m[0m[2;31m[0m[2;31m[0m
+```"""
+
+
     # Данные для отправки
     data = {
-        "content": content
+        "content": colored_message
     }
+
 
     # Отправка POST-запроса
     response = requests.post(url, headers=headers, data=json.dumps(data))
@@ -112,6 +120,7 @@ def message_chat(messages):  # Поиск сообщений и подготов
 
         except (IndexError, KeyError):
             pass
+
 
         # Обертываем все сообщения в один блок div
         final_html = f"""
