@@ -107,7 +107,7 @@ def send_message_to_channel(content):  # Функция для отправки 
     # Извлекаем username
     username = user_data["username"]
 
-    username = F"Сообщение от{name}"
+    username = F"Сообщение от {username}"
 
     colored_message = F"""{username}```ansi
 [2;31m[2;31m[2;31m[2;31m{content}[0m[2;31m[0m[2;31m[0m[2;31m[0m[2;31m[2;31m[2;31m[2;31m[2;41m[2;31m[2;31m[2;31m[0m[2;31m[2;41m[0m[2;31m[2;41m[0m[2;31m[2;41m[0m[2;31m[0m[2;31m[0m[2;31m[0m[2;31m[0m
