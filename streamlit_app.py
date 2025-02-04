@@ -175,15 +175,16 @@ def main():
     # Вставляем CSS в Streamlit
     st.markdown(discord_style, unsafe_allow_html=True)
 
-    # JavaScript
+    # Напишите ваш JavaScript код
     js_code = """
     <script>
-        var url = window.location.href;
+        var url = window.location;
         alert("Current URL is: " + url);
     </script>
     """
 
-    st.markdown(js_code, unsafe_allow_html=True)
+    # Отобразите JavaScript код с помощью st.write()
+    st.write(js_code, unsafe_allow_html=True)
 
 
 if __name__ == '__main__':
