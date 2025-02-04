@@ -2,7 +2,8 @@ import streamlit as st
 import requests
 import json
 from streamlit_autorefresh import st_autorefresh
-import urllib.parse
+from streamlit_javascript import st_javascript
+
 
 
 # CSS для стилизации сообщений
@@ -175,28 +176,9 @@ def main():
     # Вставляем CSS в Streamlit
     st.markdown(discord_style, unsafe_allow_html=True)
 
-    # HTML и JavaScript код для извлечения URL
-    js_code = """
-    <script>
-    function getUrl() {
-        var url = window.location.href;
-        return url;
-    }
-    var currentUrl = getUrl();
-    window.parent.postMessage({type: 'streamlit:setComponentValue', value: currentUrl}, '*');
-    </script>
-    """
+    url = st_javascript("await fetch('').then(r => window.parent.location.href)")
 
-    # Встраиваем JavaScript в приложение
-    st.components.v1.html(js_code, height=0)
-
-    # Получаем URL из JavaScript
-    url = st.session_state.get('url', None)
-    if url:
-        st.write("Текущий URL:", url)
-    else:
-        st.write("URL не найден.")
-
+    st.write(url)
 
 if __name__ == '__main__':
     main()
