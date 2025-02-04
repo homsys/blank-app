@@ -154,10 +154,8 @@ def main():
     average = round(average, 4)
     placeholder_crow.write(f"CROW: $<span style='color:red'>{average}</span>", unsafe_allow_html=True)
 
-    st.write("Discord чат:")
-
     # Поле для ввода сообщения
-    message_content = st.text_input("Введите ваше сообщение:")
+    message_content = st.text_input("Введите ваше сообщение в дискорд чат:")
 
     if st.button("Отправить"):     # Кнопка отправки
         if message_content:
