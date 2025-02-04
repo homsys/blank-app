@@ -70,6 +70,23 @@ def get_discord_message():  # Функция получения сообщени
 
 
 def add_username(content):  # Функция распознания пользователя - добавляем ник в сообещние
+    pass
+
+
+def send_message_to_channel(content):  # Функция для отправки сообщения
+    TOKEN = st.secrets["discord"]["token"]
+
+    id_canal = "941976229412761653"
+
+    # URL для отправки сообщения
+    url = f"https://discord.com/api/v10/channels/{id_canal}/messages"
+
+    # Заголовки запроса
+    headers = {
+        "Authorization": f"Bot {TOKEN}",
+        "Content-Type": "application/json"
+    }
+
     url = st_javascript("await fetch('').then(r => window.parent.location.href)")
 
     # Извлечение фрагмента после '#'
@@ -89,24 +106,6 @@ def add_username(content):  # Функция распознания пользо
 
     # Извлекаем username
     username = user_data["username"]
-    return username
-
-
-def send_message_to_channel(content):  # Функция для отправки сообщения
-    TOKEN = st.secrets["discord"]["token"]
-
-    id_canal = "941976229412761653"
-
-    # URL для отправки сообщения
-    url = f"https://discord.com/api/v10/channels/{id_canal}/messages"
-
-    # Заголовки запроса
-    headers = {
-        "Authorization": f"Bot {TOKEN}",
-        "Content-Type": "application/json"
-    }
-
-    send_message_to_channel(content)
 
     username = F"Сообщение от{name}"
 
