@@ -113,10 +113,16 @@ def message_chat(messages):  # Поиск сообщений и подготов
                 if content == "":
                     continue
 
+                text_to_remove = """```ansi [2;31m[2;31m[2;31m[2;31m"""
+                text_to_remove2 = """```[0m[2;31m[0m[2;31m[0m[2;31m[0m[2;31m[2;31m[2;31m[2;31m[2;41m[2;31m[2;31m[2;31m[0m[2;31m[2;41m[0m[2;31m[2;41m[0m[2;31m[2;41m[0m[2;31m[0m[2;31m[0m[2;31m[0m[2;31m[0m ```""""
+                new_string = content.replace(text_to_remove, "")
+                new_string = new_string.replace(text_to_remove2, "")
+
+
                 # Формируем HTML для сообщения
                 s1 = """<span class="username">"""
                 s2 = "</span>"
-                all_messages_html += F" {s1} {username} {s2} : {content} <br>"
+                all_messages_html += F" {s1} {username} {s2} : {new_string} <br>"
 
         except (IndexError, KeyError):
             pass
