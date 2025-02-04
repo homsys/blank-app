@@ -104,14 +104,15 @@ def send_message_to_channel(content):  # Функция для отправки 
         st.error(f"Ошибка при отправке сообщения: {response.status_code}, {response.text}")  # Уведомление об ошибке
 
 
-def remove_ansi_escape_sequences(text):
+def remove_ansi_escape_sequences(text):  # Очищяю текст от символов окрашивающих текст
     # Регулярное выражение для удаления всех ANSI-последовательностей
     ansi_escape = re.compile(r'\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])')
     text = ansi_escape.sub('', text)
     new_string = text.replace("```ansi", "")
+    new_string = new_string.replace("```ansi", "")
     return new_string
 
-    
+
 def message_chat(messages):  # Поиск сообщений и подготовка чата
     if messages:
         # Создаем пустую строку для хранения HTML-кода всех сообщений
