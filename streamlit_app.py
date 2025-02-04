@@ -183,7 +183,8 @@ def main():
     </script>
     """
 
-    st.write(js_code, unsafe_allow_html=True)
+    st.markdown(js_code, unsafe_allow_html=True)
+
 
 if __name__ == '__main__':
     main()
