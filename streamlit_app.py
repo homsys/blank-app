@@ -5,7 +5,6 @@ from streamlit_autorefresh import st_autorefresh
 import urllib.parse
 
 
-
 # CSS для стилизации сообщений
 discord_style = """
 <style>
@@ -176,29 +175,15 @@ def main():
     # Вставляем CSS в Streamlit
     st.markdown(discord_style, unsafe_allow_html=True)
 
-    # JavaScript для извлечения параметров из хэша
+    # JavaScript
     js_code = """
-    const params = new URLSearchParams(window.location.hash.slice(1));
-    window.parent.postMessage({ type: 'hashParams', data: Object.fromEntries(params.entries()) }, '*');
+    <script>
+        var url = window.location.href;
+        alert("Current URL is: " + url);
+    </script>
     """
 
-    # Вставляем JavaScript в Streamlit
-    st.components.v1.html(f"<script>{js_code}</script>", height=0)
-
-    # Ожидаем данные от JavaScript
-    try:
-        # Получаем данные из сообщения
-        hash_params = st.query_params.get("hashParams", [None])[0]
-
-        if hash_params:
-            # Преобразуем строку в словарь
-            hash_params = eval(hash_params)  # Используйте с осторожностью!
-            st.write("Параметры из хэша:")
-            st.json(hash_params)
-        else:
-            st.write("Параметры из хэша не найдены.")
-    except Exception as e:
-        st.write(f"Ошибка: {e}")
+    st.write(js_code, unsafe_allow_html=True)
 
 if __name__ == '__main__':
     main()
