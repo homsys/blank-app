@@ -188,7 +188,7 @@ def main():
     # Ожидаем данные от JavaScript
     try:
         # Получаем данные из сообщения
-        hash_params = st.experimental_get_query_params().get("hashParams", [None])[0]
+        hash_params = st.query_params.get("hashParams", [None])[0]
 
         if hash_params:
             # Преобразуем строку в словарь
@@ -199,7 +199,6 @@ def main():
             st.write("Параметры из хэша не найдены.")
     except Exception as e:
         st.write(f"Ошибка: {e}")
-
 
 if __name__ == '__main__':
     main()
