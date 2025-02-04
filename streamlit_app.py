@@ -89,13 +89,13 @@ def add_username(content):  # Функция распознания пользо
 
     # Извлекаем username
     username = user_data["username"]
-    st.write(username)
+    return username
 
 
 def send_message_to_channel(content):  # Функция для отправки сообщения
     TOKEN = st.secrets["discord"]["token"]
 
-    id_canal = "1215815002422906881"
+    id_canal = "941976229412761653"
 
     # URL для отправки сообщения
     url = f"https://discord.com/api/v10/channels/{id_canal}/messages"
@@ -106,7 +106,11 @@ def send_message_to_channel(content):  # Функция для отправки 
         "Content-Type": "application/json"
     }
 
-    colored_message = F"""```ansi
+    send_message_to_channel(content)
+
+    username = F"Сообщение от{name}"
+
+    colored_message = F"""{username}```ansi
 [2;31m[2;31m[2;31m[2;31m{content}[0m[2;31m[0m[2;31m[0m[2;31m[0m[2;31m[2;31m[2;31m[2;31m[2;41m[2;31m[2;31m[2;31m[0m[2;31m[2;41m[0m[2;31m[2;41m[0m[2;31m[2;41m[0m[2;31m[0m[2;31m[0m[2;31m[0m[2;31m[0m
 ```"""
 
