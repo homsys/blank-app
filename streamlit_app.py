@@ -109,7 +109,7 @@ def remove_ansi_escape_sequences(text):  # Очищяю текст от симв
     ansi_escape = re.compile(r'\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])')
     text = ansi_escape.sub('', text)
     new_string = text.replace("```ansi", "")
-    new_string = new_string.replace("```ansi", "")
+    new_string = new_string.replace("```", "")
     return new_string
 
 
